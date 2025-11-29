@@ -1,0 +1,38 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Camera {
+  id         Int         @id @default(autoincrement())
+  name       String
+  streamUrl  String
+  createdAt  DateTime    @default(now())
+  detections Detection[]
+}
+
+model Blacklist {
+  id          Int         @id @default(autoincrement())
+  plateNumber String      @unique
+  notes       String?
+  addedAt     DateTime    @default(now())
+  detections  Detection[]
+}
+
+model Detection {
+  id            Int        @id @default(autoincrement())
+  plateNumber   String
+  timestamp     DateTime   @default(now())
+  cameraId      Int
+  imagePath     String
+  videoPath     String?
+  blacklistFlag Boolean    @default(false)
+  blacklistId   Int?
+  blacklist     Blacklist? @relation(fields: [blacklistId], references: [id])
+  camera        Camera     @relation(fields: [cameraId], references: [id])
+}
