@@ -42,7 +42,7 @@ Before you begin, ensure you have the following installed:
 ### 1. Clone the Repository
 
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/Vishesh0001/ANPR-systems.git
 cd "ANPR Systems"
 ```
 
